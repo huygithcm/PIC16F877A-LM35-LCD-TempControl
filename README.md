@@ -34,3 +34,6 @@ schematic folder :))
 ---
 
 ## 💻 Software Implementation
+✨ Contributors
+👨‍💻BUI QUANG HUY - Developer & Maintainer
+📧 Contact: huybui211339@gmail.com
