@@ -1,0 +1,102 @@
+#include<16F877a.h>  // khai bao thu vien 
+#device ADC=8//khai bao ADC 8 bit
+#fuses HS,NOWDT,NOPUT,NOLVP
+#use delay(clock=20000000)
+
+
+#define LCD_RS_PIN      PIN_B5                                 
+#define LCD_RW_PIN      PIN_B4                                   
+#define LCD_ENABLE_PIN  PIN_B3                                  
+#define LCD_DATA4       PIN_D7                                   
+#define LCD_DATA5       PIN_D6                                   
+#define LCD_DATA6       PIN_D5                                  
+#define LCD_DATA7       PIN_D4
+// end LCD module connections7
+
+#include <lcd.c>
+#define lm35    PIN_A1
+#define den     PIN_C2
+#define d1 PIN_D1
+#define nut1 PIN_C1
+#define nut2 PIN_C0
+float setnhietdo=0;
+float nhiet_do;
+int8 chuoi_lcd[17];
+int8 chuoi_lcd2[17];
+
+
+void docnutnhan()
+{
+         if(input(nut1) == 0) 
+         {
+            delay_ms(20);
+            if(input(nut1)== 0){ setnhietdo=setnhietdo+1;}
+         }
+         if(input(nut2) == 0)
+         {
+            delay_ms(20);
+            if(input(nut2)== 0){ setnhietdo=setnhietdo-1;}
+         }
+         if( setnhietdo < 0){setnhietdo = 0;}
+}
+
+void khoitaobandau()
+{
+   
+   
+   setup_adc(ADC_CLOCK_DIV_8);
+   setup_adc_ports(AN0);
+   set_adc_channel(lm35);//Chon Kenh ADC AN1
+       lcd_init();
+      lcd_gotoxy(1,1);
+      printf(lcd_putc," ");
+      lcd_gotoxy(1,2);
+      printf(lcd_putc," ");
+      delay_ms(1000);
+    
+   lcd_gotoxy(1,1);
+   printf(lcd_putc," DOC NHIET DO  ");  
+   lcd_gotoxy(1,2);
+   printf(lcd_putc," LM35        ");
+   delay_ms(1000);
+   
+    
+}
+void doc_nhiet_do(int8 lan_doc)
+{
+    int8 lap_doc_adc;
+    float nhiet_do_trc;
+    set_adc_channel(lm35);     //Chon Kenh ADC AN0
+    nhiet_do_trc=0;
+     for(lap_doc_adc=0;lap_doc_adc<lan_doc;lap_doc_adc++)
+     {
+          nhiet_do_trc = nhiet_do_trc +  read_adc();//+ ( (read_adc() / 255.0) * 5000.0 ) / 10.0 ; 
+          delay_ms(10);
+     }
+     nhiet_do=nhiet_do_trc /lan_doc;
+}
+void main()
+{
+   output_low(d1);
+    khoitaobandau();
+    lcd_putc("\f");
+   while(TRUE)
+   {    
+      doc_nhiet_do(10);
+      lcd_gotoxy(1,1);
+      sprintf(chuoi_lcd,"TEMP :%.1f ",nhiet_do);
+      printf(lcd_putc,chuoi_lcd);
+      lcd_putc(223);                             // Print degree symbol ( ° )
+      lcd_putc("C ");
+      lcd_gotoxy(1,2);
+      sprintf(chuoi_lcd2,"TEMP SET :%.1f ",setnhietdo);
+      printf(lcd_putc,chuoi_lcd2);
+      lcd_putc(223);                             // Print degree symbol ( ° )
+      lcd_putc("C ");
+      docnutnhan();
+      if(nhiet_do > setnhietdo)
+      {
+          output_high(den);  
+      }else { output_low(den);}
+   }
+}

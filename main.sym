@@ -1,0 +1,181 @@
+004-005 @READ_PROGRAM_MEMORY8.P1
+004-005 @WRITE_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1_LOW
+015     CCP_1
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B     CCP_2
+01C     CCP_2_HIGH
+020-023 set_temperature
+024-027 current_temperature
+028-038 lcd_line1
+039-049 lcd_line2
+04A     @TRIS_C
+04B-04C @sprintf_string
+04D-050 @FLT.P1
+04D     lcd_init.i
+04D     read_temperature.num_reads
+04D     @PSTRINGCN7_767.P1
+04D-050 @PRINTF_L32D_767FPFPF.P2
+04D     read_buttons.@SCRATCH1
+04D     initialize_system.@SCRATCH1
+04D     @PSTRINGC7_724.@SCRATCH1
+04D     @PSTRINGR_724.@SCRATCH1
+04E     read_temperature.adc_read_count
+04E-051 lcd_init.LCD_INIT_STRING
+04E     @PSTRINGC7_724.@SCRATCH2
+04E     @PSTRINGCN7_767.@SCRATCH1
+04E     @PSTRINGR_724.@SCRATCH2
+04F-052 read_temperature.temp_sum
+04F     @PSTRINGC7_724.@SCRATCH3
+04F     @PSTRINGCN7_767.@SCRATCH2
+050     lcd_putc.c
+050     @PSTRINGC7_724.@SCRATCH4
+050     @PSTRINGCN7_767.@SCRATCH3
+051     lcd_gotoxy.x
+051     @PRINTF_L32D_767FPFPF.P1
+051-054 @FLT.P2
+051     @PSTRINGCN7_767.@SCRATCH4
+052     lcd_gotoxy.y
+052     lcd_init.@SCRATCH1
+052     @PRINTF_L32D_767FPFPF.@SCRATCH1
+053-056 @ADDFF.P1
+053     @delay_ms1.P2
+053     lcd_gotoxy.address
+053     read_temperature.@SCRATCH1
+053     @PRINTF_L32D_767FPFPF.@SCRATCH2
+054-055 @ITOF.P1
+054     lcd_gotoxy.@SCRATCH1
+054     read_temperature.@SCRATCH2
+054     @PRINTF_L32D_767FPFPF.@SCRATCH3
+055     lcd_send_byte.address
+055     @FLT.@SCRATCH1
+055     read_temperature.@SCRATCH3
+055     @PRINTF_L32D_767FPFPF.@SCRATCH4
+056     lcd_send_byte.n
+056     @FLT.@SCRATCH2
+056     read_temperature.@SCRATCH4
+056     @PRINTF_L32D_767FPFPF.@SCRATCH5
+057-05A @DIVFF.P1
+057     lcd_read_byte.low
+057-05A @ADDFF.P1
+057     lcd_send_byte.@SCRATCH1
+057     @PRINTF_L32D_767FPFPF.@SCRATCH6
+058     lcd_send_nibble.n
+058     lcd_read_byte.high
+058     @PRINTF_L32D_767FPFPF.@SCRATCH7
+059     lcd_read_nibble.n
+059     lcd_read_byte.@SCRATCH1
+059     @PRINTF_L32D_767FPFPF.@SCRATCH8
+05A-05D @DIV3232.P1
+05A-05D @MULFF.P2
+05A-05D @FTOSD.P3
+05A     @SPRINTF.P4
+05A     lcd_read_nibble.@SCRATCH1
+05B-05E @DIVFF.P1
+05B     @ADDFF.@SCRATCH1
+05C     @ADDFF.@SCRATCH2
+05D     @ADDFF.@SCRATCH3
+05E-061 @DIV3232.P1
+05E-061 @MULFF.P2
+05E     @ADDFF.@SCRATCH4
+05E     @FTOSD.@SCRATCH1
+05F     @ADDFF.@SCRATCH5
+05F     @DIVFF.@SCRATCH1
+060     @ADDFF.@SCRATCH6
+060     @DIVFF.@SCRATCH2
+061     @ADDFF.@SCRATCH7
+061     @DIVFF.@SCRATCH3
+062     @ADDFF.@SCRATCH8
+062     @DIVFF.@SCRATCH4
+062     @MULFF.@SCRATCH1
+062     @DIV3232.@SCRATCH1
+063     @DIVFF.@SCRATCH5
+063     @MULFF.@SCRATCH2
+063     @DIV3232.@SCRATCH2
+064     @DIVFF.@SCRATCH6
+064     @MULFF.@SCRATCH3
+064     @DIV3232.@SCRATCH3
+065     @MULFF.@SCRATCH4
+065     @DIV3232.@SCRATCH4
+066     @MULFF.@SCRATCH5
+066     @DIV3232.@SCRATCH5
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+09C.6   C1OUT
+09C.7   C2OUT
+10D-10E @WRITE_PROGRAM_MEMORY8.P1
+10D-10E @READ_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+000004  @const766.call
+000005  @const771.call
+00000B  @const783.call
+00000D  @const784.call
+000015  @const785.call
+000017  @delay_ms1
+00002B  lcd_send_nibble
+000059  lcd_read_nibble
+00008A  lcd_send_byte
+000092  lcd_read_byte
+0000E8  lcd_gotoxy
+0000FA  lcd_putc
+000126  initialize_system
+00013B  lcd_init
+000197  @PSTRINGC7_724
+0001ED  @ITOF
+00020A  @DIVFF
+0002D4  @MULFF
+000349  @ADDFF
+00048A  read_temperature
+00051D  @SPRINTF
+00052A  @PSTRINGCN7_767
+000581  @DIV3232
+0005D0  @PRINTF_L32D_767FPFPF
+0005F7  @FTOSD
+0006B0  @PSTRINGR_724
+0006C6  @FLT
+000705  read_buttons
+000800  MAIN
+000800  @cinit1
+000812  @cinit2
+
+Project Directory:
+    C:\Users\huybu\Desktop\DU_AN_CUA_HUY\CODE_DO_AN_CU\lm35setnhiet\
+
+Project Files:
+    main.c                                                  [10-Feb-25 12:18  CRC=4A232BD2]
+    ..\..\..\..\..\..\Program Files (x86)\PICC\Devices\16F877a.h [21-Oct-22 11:02  CRC=6A06E202]
+    ..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\lcd.c [22-Feb-16 10:05  CRC=D1A6378A]
+
+Source signature=57767CE8
+Program memory checksum=0000
+Hex file CRC=4DED
+
+Units:
+    C:\Users\huybu\Desktop\DU_AN_CUA_HUY\CODE_DO_AN_CU\lm35setnhiet\main (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:   CCS5
+
+Output Files:
+    XREF file:   main.xsym
+    Errors:      main.err
+    Ext Symbols: main.esym
+    INHX8:       main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.ccspjt
+    Call Tree:   main.tre
+    Statistics:  main.STA
